@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Projects
-subtitle: Innovative projects and development logs
+subtitle: Research and engineering projects
 permalink: /projects/
 ---
 
@@ -39,6 +39,6 @@ permalink: /projects/
   </article>
   {% endfor %}
 {% else %}
-  <p><em>No projects yet. Check back soon!</em></p>
+  <p><em>No projects yet.</em></p>
 {% endif %}
 </div>

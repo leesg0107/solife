@@ -9,16 +9,15 @@
     <nav class="sidebar-nav">
       <a href="{{ '/' | absolute_url }}" class="nav-link {% if page.url == '/' %}active{% endif %}">Home</a>
       <a href="{{ '/projects' | absolute_url }}" class="nav-link">Projects</a>
-      <a href="{{ '/study/all' | absolute_url }}" class="nav-link">Study</a>
-      <a href="{{ '/journey/all' | absolute_url }}" class="nav-link">Journey</a>
+      <a href="{{ '/study' | absolute_url }}" class="nav-link">Study</a>
+      <a href="{{ '/aboutme' | absolute_url }}" class="nav-link">About</a>
     </nav>
     
     <!-- Recent Posts -->
     <div class="sidebar-section">
-      <h3>Recent Posts</h3>
+      <p class="sidebar-heading">Recent Posts</p>
       <div class="recent-posts">
-        {% assign recent_posts = site.posts | limit: 10 %}
-        {% for post in recent_posts %}
+        {% for post in site.posts limit: 10 %}
         <a href="{{ post.url | relative_url }}" class="post-link">
           <span class="post-date">{{ post.date | date: "%b %d" }}</span>
           <span class="post-title">{{ post.title | truncate: 50 }}</span>

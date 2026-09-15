@@ -1,18 +1,19 @@
 ---
 layout: page
 title: Categories
+subtitle: All posts grouped by category
 ---
 
 <div class="tags-expo">
   <div class="tags-expo-list">
     {% for category in site.categories %}
-    <a href="#{{ category[0] | slugify }}" class="post-tag">{{ category[0] }}</a>
+    <a href="#{{ category[0] | slugify }}" class="post-tag">{{ category[0] | capitalize }}</a>
     {% endfor %}
   </div>
   <hr/>
   <div class="tags-expo-section">
     {% for category in site.categories %}
-    <h2 id="{{ category[0] | slugify }}">{{ category[0] }}</h2>
+    <h2 id="{{ category[0] | slugify }}">{{ category[0] | capitalize }}</h2>
     <ul class="tags-expo-posts">
       {% for post in category[1] %}
       <li>

@@ -1,51 +1,28 @@
 ---
 layout: page
-title: About me
-subtitle: Introduction
+title: About
 permalink: /aboutme/
 ---
 
-## 👋 Hello, I'm Solgyu Lee
+I am a senior undergraduate at Soongsil University in Seoul, studying robotics and intelligent systems. My interests are in multi-robot systems, multi-agent reinforcement learning, and mobile and aerial robotics: how individual robots of different kinds can be made capable, and how a team of them can carry out missions under human supervision.
 
-I'm a **senior student** at Soongsil University in Seoul, South Korea, studying robotics and intelligent systems. My work sits at the intersection of **reinforcement learning, control, and multi-robot systems**, and my goal is to make operating a team of robots as natural as talking to an LLM.
+## Education
 
-### 🎯 Vision
+- **Soongsil University**, Seoul. B.S. candidate, 2021 to present.
+- Mandatory military service, Republic of Korea, May 2022 to October 2023.
 
-Foundation models are advancing fast, and their application to robotics already produces impressive demos. A humanoid can recognize objects, understand commands, and reason about its surroundings. But **recognition is not execution**. For that humanoid to actually pick up an object—reliably, safely, in an unstructured environment—it needs a deep understanding of dynamics, control theory, and reinforcement learning. The gap between "seeing" and "doing" is where the real engineering challenge lies.
+## Projects
 
-This is true on every platform: a drone must master flight dynamics before it can manipulate; a quadruped must solve balance and locomotion before it can cross rubble. Each robot brings its own physical constraints, and no foundation model alone bridges that gap without rigorous work in **dynamics, RL, and control**.
+- **GarageNet** (in progress): a central LLM coordinating a team of heterogeneous robots, with the current focus on communication between the robots.
+- [TALON]({% post_url project/2026-04-26-TALON %}): aerial pick-and-deliver with the landing gear used as a gripper. PPO and PID controllers in Isaac Lab, analyzed through grasp depth.
+- [Soltrone]({% post_url project/2026-01-10-soltrone_v2 %}): a quadrotor built from components on ArduPilot with a Raspberry Pi 5 companion computer.
+- [Semantic VSLAM]({% post_url project/2025-12-30-semantic_vslam %}): stereo depth, RTAB-Map odometry, EKF fusion, and YOLO detections combined into a 3D semantic map, tested in Unreal Engine 5.
+- [Agent Mcqueen]({% post_url project/2025-11-22-agent-mcqueen %}): a PPO racing agent in the F1tenth simulator, extended to overtaking by residual learning against a frozen expert.
+- [Herbot]({% post_url project/2025-11-19-herbot %}): a plant-care robot with Edge TPU vision for species and disease classification and mechanical leaf removal.
+- [COSMOS]({% post_url project/2023-12-18-cosmos %}): a layered graph structure in Rust for knowledge mapping, representing how ideas build on one another rather than only how they branch.
 
-What I ultimately want to build is a world where **anyone can operate a team of robots** the way they use an LLM today—because I believe the deepest thing robots can give people is **independence**. And the path there isn't one perfect machine; it's **cooperation** between many capable, heterogeneous robots. So I work on both ends at once: the individual platforms—especially **drones and mobile robots**—and the system that could one day orchestrate them together.
+## Contact
 
-### 🤖 What I've Built & What I'm Building
-
-**[Herbot]({% post_url project/2025-11-19-herbot %})** — A plant-care robot that runs vision models on a resource-constrained edge device to identify the herb and catch pests and disease, then act on what it sees. The point wasn't another smart farm that only *monitors*—it was building the mechanism to physically tend the plant, right down to individual leaves.
-
-**[Agent Mcqueen]({% post_url project/2025-11-22-agent-mcqueen %})** — An autonomous racing agent trained with PPO and curriculum learning in the F1tenth simulator—no classical control. It learns to complete laps purely through RL, and to teach overtaking I froze the opponent agent and trained a *residual* policy on top of the expert, so it could learn to pass without unlearning how to drive.
-
-**[Soltrone]({% post_url project/2026-01-10-soltrone_v2 %})** — A drone built from scratch—frame, electronics, flight controller—with successful flight tests. Understanding a drone from the hardware up informs every aerial project that followed.
-
-**[TALON]({% post_url project/2026-04-26-TALON %})** — Drone landing gear is dead weight after takeoff; TALON reimagines it as a functional gripper so a drone can grasp and transport a box mid-flight. The full mission runs end-to-end through four phases—approach → dock → climb → delivery. Approach and delivery are learned with PPO; for docking I first tried RL, and when it failed I used a quantitative analysis of *why* it failed to design a PID controller that reliably secures the grasp.
-
-**GarageNet** *(in progress)* — A system where individual robots and a central LLM work as one team, so anyone can operate a whole fleet as intuitively as a chat. The heart of it is cooperation and communication between robots; it's still early, and right now I'm focused on making that communication flow smoothly across the system.
-
-Each project pushed me onto a different platform and a different problem—from ground-based manipulation to aerial dynamics to multi-robot orchestration. That progression wasn't planned, but looking back it traces a clear path toward my vision: **diverse robots, unified intelligence**.
-
-### 🌟 Who Am I
-
-I thrive on **new challenges and creative problem-solving**. When I take on a problem I haven't faced before, I don't reach for the safe path—I ask a new question: *what if we approached it from a completely different angle?* I genuinely enjoy the act of solving problems, and that instinct to reframe is what drives my best work.
-
-I also value **teamwork** deeply. Serving in the military and leading a football team as club president taught me one thing clearly: when every member shares **a single, common goal**, the synergy is extraordinary. The best teammate, I believe, is someone who **walks alongside you**—not ahead, not behind, but right next to you, moving toward the same destination.
-
-### 📅 Biography
-
-<div class="biography">
-  <strong>2002.1.7</strong> Born in Seoul, Korea 🇰🇷<br>
-  <strong>2021.3</strong> Entered Soongsil University<br>
-  <strong>2022.5.2</strong> Military service begins<br>
-  <strong>2023.10.27</strong> Discharged from military service<br>
-  <strong>2024.3</strong> Returned to university as sophomore<br>
-  <strong>2025–2026</strong> Senior year, focusing on RL for aerial manipulation &amp; robotics research / President of Soongsil American Football team CRUSADERS
-</div>
-
----
+- Email: [leesg0107@gmail.com](mailto:leesg0107@gmail.com)
+- GitHub: [leesg0107](https://github.com/leesg0107)
+- LinkedIn: [leesg17](https://linkedin.com/in/leesg17)

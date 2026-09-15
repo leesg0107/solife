@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -65,7 +66,6 @@
                     { label: 'Layout', name: 'layout', widget: 'hidden', default: 'post' },
                     { label: 'Title', name: 'title', widget: 'string' },
                     { label: 'Subtitle', name: 'subtitle', widget: 'string', required: false },
-                    { label: 'Author', name: 'author', widget: 'string', default: 'solgyu' },
                     { label: 'Category', name: 'category', widget: 'hidden', default: 'project' },
                     { label: 'Tags', name: 'tags', widget: 'list', required: false },
                     { label: 'MathJax', name: 'mathjax', widget: 'boolean', default: false, required: false },
@@ -84,28 +84,9 @@
                     { label: 'Layout', name: 'layout', widget: 'hidden', default: 'post' },
                     { label: 'Title', name: 'title', widget: 'string' },
                     { label: 'Subtitle', name: 'subtitle', widget: 'string', required: false },
-                    { label: 'Author', name: 'author', widget: 'string', default: 'solgyu' },
                     { label: 'Category', name: 'category', widget: 'hidden', default: 'study' },
                     { label: 'Tags', name: 'tags', widget: 'list', required: false },
                     { label: 'MathJax', name: 'mathjax', widget: 'boolean', default: true, required: false },
-                    { label: 'Body', name: 'body', widget: 'markdown' }
-                  ]
-                },
-                {
-                  name: 'journey',
-                  label: 'Journey Posts',
-                  folder: '_posts/journey',
-                  create: true,
-                  slug: '{{year}}-{{month}}-{{day}}-{{slug}}',
-                  extension: 'md',
-                  fields: [
-                    { label: 'Layout', name: 'layout', widget: 'hidden', default: 'post' },
-                    { label: 'Title', name: 'title', widget: 'string' },
-                    { label: 'Subtitle', name: 'subtitle', widget: 'string', required: false },
-                    { label: 'Author', name: 'author', widget: 'string', default: 'solgyu' },
-                    { label: 'Category', name: 'category', widget: 'hidden', default: 'journey' },
-                    { label: 'Subcategory', name: 'subcategory', widget: 'select', options: ['dev', 'challenges', 'reflections'], required: false },
-                    { label: 'Tags', name: 'tags', widget: 'list', required: false },
                     { label: 'Body', name: 'body', widget: 'markdown' }
                   ]
                 }

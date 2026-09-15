@@ -2,24 +2,19 @@
 layout: post
 title: Agent Mcqueen
 subtitle: Head-to-Head Competitive Racing using PPO
-tags: [rl, ppo, f1tenth, marl]
-author: solgyu lee
+tags: [reinforcement-learning, ppo, f1tenth, multi-agent-rl]
 category: project
 mathjax: true
 mermaid: true
 thumbnail-img: "/assets/img/Agent-Mcqueen/agent-mcqueen-f1tenth.png"
 ---
-Are you an F1 fan? With the recent F1-themed movie release, racing has gained tremendous popularity, drawing many new enthusiasts into the sport. While I'm not a hardcore fan myself, I do enjoy catching clips from time to time.
-
-I've thought about why people are so captivated by racing. My answer: the dynamic driving and the strategic battles such as overtaking, defending, positioning. These behaviors are nearly impossible to capture with traditional control algorithms where inputs and outputs are rigidly defined. That's where reinforcement learning comes in. Through trial and error, RL can learn the kind of dynamic racing that professional drivers exhibit.
-
-This sparked my idea: train an agent to race competitively. I thoroughly enjoy naming projects, and when I think of racing, the movie "Cars" immediately comes to mind, specifically Lightning McQueen. Hence, Agent Mcqueen was born.
+Racing behaviors such as overtaking, defending, and positioning are difficult to capture with hand-designed controllers, because the right action depends on a fast-changing interaction with another vehicle. Reinforcement learning can acquire such behavior from experience. Agent Mcqueen is a PPO-based racing agent for the F1tenth simulator, trained first to drive alone and then to overtake a competitor.
 
 ---
 
 ## Why PPO?
 
-Before diving into the implementation, let me explain why I chose PPO (Proximal Policy Optimization) for this project.
+PPO (Proximal Policy Optimization) was chosen for the following reasons.
 
 | Algorithm Type            | Examples       | Characteristics                         |
 | ------------------------- | -------------- | --------------------------------------- |
@@ -27,14 +22,14 @@ Before diving into the implementation, let me explain why I chose PPO (Proximal 
 | **Policy Gradient** | REINFORCE, A2C | High variance, continuous actions       |
 | **Actor-Critic**    | PPO, SAC, TD3  | Balanced stability and efficiency       |
 
-PPO belongs to the Actor-Critic family, combining the best of both worlds:
+PPO belongs to the Actor-Critic family, using a learned value function to reduce the variance of the policy gradient:
 
 <div class="mermaid">
 flowchart LR
     subgraph AC["Actor-Critic Architecture"]
         STATE[State s]
-        ACTOR["🎭 Actor<br/>π(a|s)"]
-        CRITIC["📊 Critic<br/>V(s)"]
+        ACTOR["Actor<br/>π(a|s)"]
+        CRITIC["Critic<br/>V(s)"]
         ACTION[Action a]
         ADV["Advantage<br/>A = R - V(s)"]
     end
@@ -67,7 +62,7 @@ where $r_t(\theta) = \frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{old}}(a_t|s_t)}$ is
 
 ## Two-Stage Training Approach
 
-I knew from the start that jumping straight into competitive racing would be futile. Computers are surprisingly dumb at first. So I divided the training into two stages:
+Training directly on competitive racing is unlikely to succeed, since the agent must first learn to drive at all. Training was therefore split into two stages:
 
 | Stage             | Goal                  | Environment       | Agents |
 | ----------------- | --------------------- | ----------------- | ------ |
@@ -83,25 +78,25 @@ I knew from the start that jumping straight into competitive racing would be fut
   Your browser does not support the video tag.
 </video>
 
-I referenced [this GitHub repository](https://github.com/meraccos/f1tenth_reinforcement_learning) to build Stage 1. However, the code appeared incomplete like missing environment initialization and other critical components, so I had to fill in the gaps myself.
+I referenced [this GitHub repository](https://github.com/meraccos/f1tenth_reinforcement_learning) to build Stage 1. Some pieces I needed appeared to be missing — environment initialization among them — so I implemented those myself.
 
 ### Observation and Action Space
 
 <div class="mermaid">
 flowchart LR
-    subgraph OBS["📡 Observation Space"]
+    subgraph OBS["Observation Space"]
         LIDAR["LiDAR Scan<br/>1080 rays"]
         VEL["Linear Velocity<br/>1 value"]
     end
 
-    subgraph AGENT["🧠 PPO Agent"]
+    subgraph AGENT["PPO Agent"]
         ACTOR["Actor Network"]
         CRITIC["Critic Network"]
     end
 
-    subgraph ACT["🎮 Action Space"]
-        STEER["Steering Angle`<br/>`[-0.4, 0.4] rad"]
-        SPEED["Target Speed`<br/>`[0, 8] m/s"]
+    subgraph ACT["Action Space"]
+        STEER["Steering Angle<br/>[-0.4, 0.4] rad"]
+        SPEED["Target Speed<br/>[0, 8] m/s"]
     end
 
     OBS --> AGENT
@@ -124,9 +119,9 @@ The reward function uses **Frenet coordinates** to measure progress along the tr
 flowchart LR
     POSE["Agent Pose<br/>(x, y, θ)"] --> KD["K-D Tree<br/>Nearest Waypoint"] --> FRENET["Frenet Transform"]
 
-    FRENET --> PROG["📈 Progress<br/>+Δs"]
-    FRENET --> LAT["📏 Lateral<br/>-|d|"]
-    FRENET --> COL["💥 Collision<br/>-10"]
+    FRENET --> PROG["Progress<br/>+Δs"]
+    FRENET --> LAT["Lateral<br/>-|d|"]
+    FRENET --> COL["Collision<br/>-10"]
 </div>
 
 | Reward Component            | Formula       | Purpose                    |
@@ -139,7 +134,7 @@ flowchart LR
 
 <img src="/assets/img/Agent-Mcqueen/stage1-domain-randomization.png" alt="Domain Randomization with Obstacles" style="width:70%;">
 
-To improve model generalization, I implemented domain randomization by randomly placing obstacles on the tracks during training. This ensured the agent could handle various track configurations and obstacles, leading to robust performance across most maps.
+Obstacles were placed at random positions on the tracks during training to improve generalization across track layouts.
 
 | Randomization                | Range                             |
 | ---------------------------- | --------------------------------- |
@@ -162,24 +157,24 @@ To improve model generalization, I implemented domain randomization by randomly 
   Your browser does not support the video tag.
 </video>
 
-There were countless trial-and-error moments, mostly related to environment initialization. The centerline dataset needed to reload correctly for each randomly selected track, but improper initialization caused the agent to only drive perfectly on map #50. I had trusted the reference GitHub too much, my mistake entirely. Lesson learned.
+Most of the debugging effort went into environment initialization. The centerline dataset must be reloaded for each randomly selected track; when it was not, the agent learned to drive only on map #50. The reference implementation had been trusted too readily on this point.
 
 ---
 
 ## Stage 2: Competitive Racing
 
-Now the real challenge began. I initially thought switching from PPO to MAPPO (Multi-Agent PPO) would be straightforward (how naive).
+The initial plan was to switch from PPO to MAPPO (multi-agent PPO). This turned out to be much harder than expected.
 
 ### The MARL Challenge
 
-Transitioning from single-agent RL to multi-agent RL (MARL) completely changes the game:
+Moving from single-agent to multi-agent RL introduces three well-known difficulties:
 
 <div class="mermaid">
 flowchart LR
-    subgraph CHALLENGES["⚠️ MARL Challenges"]
-        NS["🔄 Non-Stationarity"]
-        CA["🎯 Credit Assignment"]
-        EQ["⚖️ Equilibrium Selection"]
+    subgraph CHALLENGES["MARL Challenges"]
+        NS["Non-Stationarity"]
+        CA["Credit Assignment"]
+        EQ["Equilibrium Selection"]
     end
 
     subgraph MAPPO["MAPPO"]
@@ -200,22 +195,22 @@ flowchart LR
 | **Credit Assignment**     | Hard to attribute rewards           | Who caused the collision?              |
 | **Equilibrium Selection** | Multiple optimal strategies         | Agents may converge to suboptimal play |
 
-I restructured the code to handle zero-sum rewards, but whenever I started training both agents, they would eventually lose even their basic driving ability. This was particularly frustrating since I loaded perfectly trained models from Stage 1, only to watch them regress.
+After restructuring the code for zero-sum rewards, joint training of both agents consistently degraded: even when initialized from the Stage 1 models, both agents eventually lost basic driving ability.
 
 ### Solution: Residual Learning with Frozen Expert
 
-I made a drastic decision: abandon MARL entirely. Instead, I developed a **residual learning** approach with a frozen expert agent.
+Joint training was abandoned in favor of a **residual learning** approach against a frozen expert.
 
 <div class="mermaid">
 flowchart LR
-    subgraph AGENT0["🥶 Agent 0 (Frozen)"]
-        OBS0["LiDAR+Vel"] --> F0["feature_net ❄️"] --> M0["mean/log_std ❄️"] --> ACT0["Action"]
+    subgraph AGENT0["Agent 0 (frozen)"]
+        OBS0["LiDAR+Vel"] --> F0["feature_net (frozen)"] --> M0["mean/log_std (frozen)"] --> ACT0["Action"]
     end
 
-    subgraph AGENT1["🔥 Agent 1 (Trainable)"]
-        OBS1["LiDAR+Vel"] --> LN1["lidar_net ❄️"]
-        OPPINFO["Opponent Info"] --> ON["opponent_net 🔥"]
-        LN1 --> OAN["adjustment_net 🔥"]
+    subgraph AGENT1["Agent 1 (trainable)"]
+        OBS1["LiDAR+Vel"] --> LN1["lidar_net (frozen)"]
+        OPPINFO["Opponent Info"] --> ON["opponent_net (trainable)"]
+        LN1 --> OAN["adjustment_net (trainable)"]
         ON --> OAN
         OAN --> ACT1["Action"]
     end
@@ -231,17 +226,17 @@ flowchart LR
 | **Delta Vs (Δvs)** | 1         | Relative velocity            |
 | **Ahead Flag**      | 1         | 1 if ahead, 0 otherwise      |
 
-This design allows Agent 1 to "see" its opponent and learn competitive behaviors while maintaining the expert driving foundation from Stage 1.
+This lets Agent 1 observe its opponent and learn competitive behavior while the frozen Stage 1 networks preserve its driving ability.
 
 ### Stage 2 Reward Structure
 
 <div class="mermaid">
 flowchart LR
     subgraph REWARDS["Stage 2 Rewards"]
-        BASE["📈 Base Driving<br/>(from Stage 1)"]
-        GAP["📏 Gap Reward<br/>+Δs (close the gap)"]
-        PASS["🏆 Overtake Bonus<br/>+50 (when ahead changes)"]
-        SAFE["🛡️ Safety Penalty<br/>-10 (collision)"]
+        BASE["Base Driving<br/>(from Stage 1)"]
+        GAP["Gap Reward<br/>+Δs (close the gap)"]
+        PASS["Overtake Bonus<br/>+50 (when ahead changes)"]
+        SAFE["Safety Penalty<br/>-10 (collision)"]
     end
 </div>
 
@@ -260,7 +255,7 @@ flowchart LR
 | **Opponent Info Scaling** | 0.01 (very small)    |
 | **Training Steps**        | 5 million            |
 
-One crucial trick: I scaled down the opponent information in the observations to very small values. When I used larger scaling factors, the agent became too focused on the opponent and its driving capability deteriorated.
+The opponent features are scaled to very small values. With larger scaling factors the agent over-weighted the opponent and its driving deteriorated.
 
 <video width="70%" controls>
   <source src="/assets/img/Agent-Mcqueen/IMG_6667.mp4" type="video/mp4">
@@ -275,18 +270,18 @@ The entire system is integrated with ROS2 for deployment on the F1tenth platform
 
 <div class="mermaid">
 flowchart LR
-    GYM["🎮 F1tenth Gym / ForzaETH"] <--> BRIDGE["gym_bridge_node"]
+    GYM["F1tenth Gym / ForzaETH"] <--> BRIDGE["gym_bridge_node"]
 
     BRIDGE --> SCAN["/scan"]
     BRIDGE --> ODOM["/odom"]
 
-    SCAN --> AGENT["🤖 agent_node"]
+    SCAN --> AGENT["agent_node"]
     ODOM --> AGENT
 
     AGENT --> CMD["/cmd_vel"] --> BRIDGE
 </div>
 
-This allows seamless transition from simulation to real hardware deployment.
+The same node structure is intended for deployment on the physical F1tenth platform.
 
 ---
 
@@ -311,13 +306,13 @@ This allows seamless transition from simulation to real hardware deployment.
   Your browser does not support the video tag.
 </video>
 
-The agent successfully learned aggressive overtaking behavior while maintaining stable driving.
+The agent learned overtaking behavior while maintaining stable driving.
 
 ---
 
-## An Interesting Discovery
+## An Observation Before Training
 
-During my extensive testing in Stage 2, I made an interesting observation in my `render_initial.py` script. I wrote this to render the initial state, allowing me to intuitively check for wall collisions and spawn positions. After getting all the settings right and running it a few times, something remarkable happened: with Agent 0 (frozen) running at 80% speed, Agent 1 (trainable) naturally overtook Agent 0—without any additional training. This gave me confidence that I didn't need to heavily weight overtaking behavior. I simply reduced the opponent information scaling factor even further and proceeded with training.
+A script written to render the initial state (to check spawn positions and wall collisions) showed that, with Agent 0 running at 80% speed, Agent 1 — still on its Stage 1 weights, before any Stage 2 training — already overtook it in some episodes. This suggested that overtaking did not need a heavy reward weight, and the opponent-information scaling was reduced further before training proceeded.
 
 ---
 
@@ -350,12 +345,12 @@ Real racing involves far more complexity than what Agent Mcqueen currently handl
 
 <div class="mermaid">
 flowchart LR
-    subgraph CURRENT["✅ Current"]
+    subgraph CURRENT["Current"]
         DRIVE["Basic Driving"]
         OVERTAKE["Simple Overtaking"]
     end
 
-    subgraph MISSING["❌ Not Modeled"]
+    subgraph MISSING["Not Modeled"]
         ACCEL["Acceleration"]
         BRAKE["Braking"]
         CORNER["Cornering"]
@@ -365,7 +360,7 @@ flowchart LR
     CURRENT -.->|"Future Work"| MISSING
 </div>
 
-Professional F1 drivers study their tracks until they can drive them blindfolded. Agent Mcqueen, in contrast, encounters new tracks constantly—making it more of an explorer than a racer. The nuanced decision-making that makes racing exciting (when to brake, how to defend a position, optimal corner entry angles) remains beyond the current implementation.
+Professional drivers learn a specific track in detail; Agent Mcqueen is trained on constantly changing tracks, so it generalizes rather than specializes. Braking points, position defense, and corner entry are not modeled.
 
 A potential improvement would be combining traditional control algorithms for low-level vehicle dynamics with RL for high-level strategic decisions. This hierarchical approach could enable more sophisticated competitive behavior.
 
@@ -373,15 +368,15 @@ A potential improvement would be combining traditional control algorithms for lo
 
 ## Conclusion
 
-Agent Mcqueen demonstrates that competitive racing AI doesn't require complex MARL frameworks. By combining:
+Agent Mcqueen shows that a competitive racing agent can be trained without a full MARL framework, by combining:
 
 1. **Solid foundation** from Stage 1 solo training
 2. **Residual learning** with frozen expert
 3. **Carefully designed observations** for opponent awareness
 4. **Appropriate reward shaping** for competitive behavior
 
-We can achieve aggressive, dynamic racing behavior that captures the essence of what makes motorsport exciting.
+The result is dynamic overtaking behavior on top of stable driving.
 
-However, this project also revealed how much complexity real racing entails. The current approach produces functional overtaking but lacks the strategic depth that makes professional racing truly compelling. Future iterations could benefit from racing line optimization, track-specific training, and hierarchical control architectures.
+The project also made clear how much of real racing remains unmodeled. The current approach produces functional overtaking but not strategic depth. Future iterations could add racing-line optimization, track-specific training, and a hierarchical control architecture.
 
-All code will be uploaded to GitHub. However, I need some time to clean it up and make it immediately usable for others who want to test it.
+The code will be released on GitHub after cleanup.

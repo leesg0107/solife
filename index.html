@@ -3,17 +3,13 @@ layout: base
 title: Home
 ---
 
-<!-- ===================== HERO ===================== -->
 <section class="home-hero">
   <h1>Solgyu Lee</h1>
   <p class="home-lead">
-    I'm a robotics and reinforcement-learning researcher working toward a world where
-    <strong>anyone can operate a team of robots as easily as they talk to an LLM.</strong>
+    Undergraduate student working on <strong>multi-robot systems</strong>, <strong>multi-agent reinforcement learning</strong>,
+    and <strong>mobile and aerial robotics</strong>.
   </p>
-  <p class="home-sub">
-    Senior at Soongsil University, Seoul — studying robotics and intelligent systems, with a focus on
-    reinforcement learning, control, and multi-robot systems.
-  </p>
+  <p class="home-sub">Senior, Soongsil University, Seoul.</p>
   <p class="home-contact">
     <a href="mailto:leesg0107@gmail.com">Email</a> ·
     <a href="https://github.com/leesg0107">GitHub</a> ·
@@ -21,39 +17,35 @@ title: Home
   </p>
 </section>
 
-<!-- ===================== MISSION ===================== -->
 <section class="home-section">
-  <h2>The Mission</h2>
-
-  <p>Foundation models made advanced AI usable by anyone — you simply talk to it, and it works. Robotics isn't there yet. Robots are multiplying and will soon share our streets, homes, and workplaces, yet operating them still demands deep, specialized expertise. <strong>My goal is to close that gap</strong> — to make commanding a team of robots as natural as prompting a language model, so the people who actually need them aren't locked out by complexity.</p>
-
-  <p>I believe the most valuable thing robots can give people is <strong>independence</strong>: the ability to secure your home, tend your land, and look after what's yours — without depending on labor that's scarce, expensive, or simply unavailable. <em>"I'll protect what's mine"</em> shouldn't require an army. It should require the robots you already own, working for you.</p>
-
-  <p>And my bet is on <strong>cooperation</strong>. A single robot is narrow and fragile; a <em>team</em> of robots — coordinating, sharing context, covering each other's blind spots — can accomplish what no individual machine can. The hard problem was never one perfect robot. It's getting many imperfect ones to act as one.</p>
-
-  <p>But a fleet is only as capable as the robots in it. So I care just as much about the individual machines — especially <strong>drones</strong> and <strong>mobile robots</strong> — and about how <strong>heterogeneous robots</strong>, each with different bodies and abilities, can master their own task before they ever cooperate. Getting one robot to do its job well is the foundation everything else is built on.</p>
-
-  <p>This matters most where people are hardest to hire: <strong>security and guarding, agriculture, large residential and facility management, and factory floors</strong> — and in the extreme, <strong>search-and-rescue and defense</strong>, where sending a team of machines instead of people can be the difference that saves lives.</p>
-
-  <blockquote class="mission-quote">
-    Make operating a fleet of robots as easy as talking to an LLM — and use it to give people back their independence.
-  </blockquote>
+  <h2>Research Interests</h2>
+  <p>
+    Robots take many forms, because each is configured for the purpose it serves and the problem it is built to solve.
+    I think their capabilities are used far more effectively when such robots form a team and carry out multiple missions
+    under human supervision, rather than when each one excels at a single task in isolation. My interests therefore
+    center on multi-robot systems, together with the robotics research that makes each member of such a team capable on its own.
+  </p>
 </section>
 
-<!-- ===================== PROJECTS ===================== -->
 <section class="home-section">
-  <h2>How I'm Getting There</h2>
-  <p>What drives me isn't solving problems no one has ever touched — it's taking on problems that are new to <em>me</em>, and the craft of solving them for its own sake. That's a big part of why robotic systems pull me in: they're a whole landscape of problems at once, from getting separate robots to cooperate to the many sub-fields packed into a single machine.</p>
-  <p>I didn't plan these projects as a curriculum, but looking back they trace a path toward that vision — each taking on a different platform and a different piece of the problem: perception and control, drones and mobile platforms, and the orchestration that ties heterogeneous robots into one team.</p>
-
+  <h2>Projects</h2>
   <div class="project-grid">
 
-    <a class="proj-card" href="{% post_url project/2025-11-19-herbot %}">
-      <div class="proj-thumb"><img src="{{ '/assets/img/cards/herbot.jpg' | relative_url }}" alt="Herbot plant-care robot"></div>
+    <a class="proj-card" href="{% post_url project/2026-04-26-TALON %}">
+      <div class="proj-thumb"><img src="{{ '/assets/img/TALON.png' | relative_url }}" alt="TALON"></div>
       <div class="proj-body">
-        <span class="proj-badge">Perception &amp; Edge</span>
-        <h3>Herbot</h3>
-        <p>Closing the loop between <em>seeing</em> and <em>doing</em> on cheap edge hardware — a plant-care robot that detects a problem and acts on it in real time.</p>
+        <span class="proj-badge">Aerial Manipulation</span>
+        <h3>TALON</h3>
+        <p>A simulated quadrotor whose landing gear doubles as a gripper. A four-phase pick-and-deliver pipeline with PPO and PID controllers, analyzed through grasp depth.</p>
+      </div>
+    </a>
+
+    <a class="proj-card" href="{% post_url project/2026-01-10-soltrone_v2 %}">
+      <div class="proj-thumb"><img src="{{ '/assets/img/cards/soltrone.jpg' | relative_url }}" alt="Soltrone drone"></div>
+      <div class="proj-body">
+        <span class="proj-badge">Aerial Platform</span>
+        <h3>Soltrone</h3>
+        <p>A quadrotor built from components, running ArduPilot with a Raspberry Pi 5 companion computer, as the platform for onboard perception work.</p>
       </div>
     </a>
 
@@ -62,79 +54,19 @@ title: Home
       <div class="proj-body">
         <span class="proj-badge">Reinforcement Learning</span>
         <h3>Agent Mcqueen</h3>
-        <p>Learning the dynamic, competitive decision-making that no hand-written controller captures — head-to-head racing trained end-to-end with RL.</p>
+        <p>Autonomous racing in the F1tenth simulator: a PPO policy trained on 450 randomized tracks, extended to head-to-head overtaking by residual learning against a frozen expert.</p>
       </div>
     </a>
 
-    <a class="proj-card" href="{% post_url project/2026-01-10-soltrone_v2 %}">
-      <div class="proj-thumb"><img src="{{ '/assets/img/cards/soltrone.jpg' | relative_url }}" alt="Soltrone drone"></div>
+    <a class="proj-card" href="{% post_url project/2025-11-19-herbot %}">
+      <div class="proj-thumb"><img src="{{ '/assets/img/cards/herbot.jpg' | relative_url }}" alt="Herbot plant-care robot"></div>
       <div class="proj-body">
-        <span class="proj-badge">Hardware</span>
-        <h3>Soltrone</h3>
-        <p>A drone built from scratch — frame to flight controller. You can't orchestrate robots you don't understand from the hardware up.</p>
+        <span class="proj-badge">Edge Vision</span>
+        <h3>Herbot</h3>
+        <p>A plant-care robot that classifies herb species and leaf disease on a Coral Edge TPU and removes diseased leaves with a rail-mounted gripper.</p>
       </div>
     </a>
-
-    <a class="proj-card" href="{% post_url project/2026-04-26-TALON %}">
-      <div class="proj-thumb"><img src="{{ '/assets/img/TALON.png' | relative_url }}" alt="TALON"></div>
-      <div class="proj-body">
-        <span class="proj-badge">Aerial Manipulation</span>
-        <h3>TALON</h3>
-        <p>Turning a drone's dead-weight landing gear into a gripper, so it can grasp and carry objects mid-flight.</p>
-      </div>
-    </a>
-
-    <div class="proj-card is-wip">
-      <div class="proj-thumb"><img src="{{ '/assets/img/cards/garagenet.svg' | relative_url }}" alt="GarageNet: a central LLM coordinating a team of heterogeneous robots"></div>
-      <div class="proj-body">
-        <span class="proj-badge">In Progress</span>
-        <h3>GarageNet</h3>
-        <p>The vision made concrete: individual robots and a central LLM working as one team, operated as simply as a chat.</p>
-      </div>
-    </div>
 
   </div>
-</section>
-
-<!-- ===================== SKILLS ===================== -->
-<section class="home-section">
-  <h2>Skills</h2>
-  <div class="skills-groups">
-    <div class="skills-group">
-      <h4>Programming</h4>
-      <ul>
-        <li>Python</li>
-        <li>C++</li>
-        <li>Rust</li>
-      </ul>
-    </div>
-    <div class="skills-group">
-      <h4>ML &amp; Robotics</h4>
-      <ul>
-        <li>PyTorch</li>
-        <li>ROS2</li>
-        <li>Isaac Sim / Lab</li>
-      </ul>
-    </div>
-    <div class="skills-group">
-      <h4>Hardware</h4>
-      <ul>
-        <li>Soldering</li>
-        <li>Drone Build</li>
-        <li>Robot Design</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== WHO I AM ===================== -->
-<section class="home-section">
-  <h2>Beyond the Lab</h2>
-  <p>I lead Soongsil University's American football team, the CRUSADERS, as club president, and stay sharp through weightlifting, running, and basketball. Serving in the military and leading a team taught me that when everyone shares one goal, the synergy is extraordinary — and that the best teammate is someone who walks <em>alongside</em> you toward the same destination.</p>
-  <p>Whether it's a reward function or a drone's landing gear, I'd rather ask <em>"what if?"</em> and fail than take the safe path and never find out.</p>
-  <p class="home-links">
-    <a href="{{ '/aboutme' | relative_url }}">More about me →</a>
-    <a href="{{ '/projects' | relative_url }}">All projects →</a>
-    <a href="{{ '/journey/all' | relative_url }}">Journey →</a>
-  </p>
+  <p><a href="{{ '/projects' | relative_url }}">All projects</a></p>
 </section>

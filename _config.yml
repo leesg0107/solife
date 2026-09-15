@@ -13,7 +13,7 @@
 title: SOLIFE 
 
 # Your name to show in the footer
-author: solgyu lee
+author: Solgyu Lee
 
 # Base URL for GitHub Pages  
 url: "https://leesg0107.github.io"
@@ -23,19 +23,6 @@ baseurl: ""  # Empty for user site (leesg0107.github.io)
 # --- List of links in the navigation bar --- #
 ###############################################
 
-navbar-links:
-  About Me: "/aboutme"
-  Projects: "/projects"
-  Study:
-    - RL: "/study/rl"
-    - MARL: "/study/marl" 
-    - Robotics: "/study/robotics"
-    - All Studies: "/study/all"
-  Journey:
-    - Dev Log: "/journey/dev"
-    - Challenges: "/journey/challenges"
-    - Reflections: "/journey/reflections"
-    - All Journey: "/journey/all"
 
 ################
 # --- Logo --- #
@@ -92,45 +79,17 @@ social-network-links:
 
 # If you want your website to generate an RSS feed, provide a description
 # The URL for the feed will be https://<your_website>/feed.xml
-rss-description: This website is a virtual proof that I'm awesome
+rss-description: Notes and projects on reinforcement learning, multi-robot systems, and robotics by Solgyu Lee
 
 ###########################
 # --- General options --- #
 ###########################
-
-# Select which social network share links to show in posts
-share-links-active:
-  twitter: false
-  facebook: false
-  linkedin: true
-  vk: false
-
-# How to display the link to your website in the footer
-# Remove this if you don't want a link in the footer
-url-pretty: "Burning passion, Cool logic"
 
 # Add the website title to the title of every page
 title-on-all-pages: true
 
 # Excerpt word length - Truncate the excerpt of each post on the feed page to the specified number of words
 excerpt_length: 50
-
-# Whether or not to show an excerpt for every blog post in the feed page
-feed_show_excerpt: true
-
-# Whether or not to show a list of tags below each post preview in the feed page
-feed_show_tags: true
-
-# Add a search button to the navbar
-post_search: true
-
-# Add a button in the footer to edit the current page. Only works if your website is hosted on GitHub
-edit_page_button: true
-
-# Allow sub-menu items (second-level navigation menu items) to be longer than the top-level menu
-# If this setting is off, then long sub-menu words might get cut off
-# See https://github.com/daattali/beautiful-jekyll/issues/765 to understand the issue this setting can solve
-navbar-var-length: false
 
 # The keywords to associate with your website, for SEO purposes
 #keywords: "my,list,of,keywords"
@@ -176,10 +135,6 @@ site-css:
 # If you have common JavaScript files that should be included in every page, list them here
 #site-js:
 #  - "/assets/js/custom-script.js"
-
-# External CSS (FontAwesome for icons)
-ext-css:
-  - "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
 
 #################################
 # --- Web Analytics Section --- #
@@ -275,10 +230,9 @@ date_format: "%B %-d, %Y"
 #################################################################################
 
 # Output options (more information on Jekyll's site)
-timezone: "America/Toronto"
+timezone: "Asia/Seoul"
 highlighter: rouge
 permalink: /:title/
-paginate: 5
 
 kramdown:
   input: GFM
@@ -296,36 +250,18 @@ defaults:
       path: "" # any file that's not a post will be a "page" layout by default
     values:
       layout: "page"
-  - scope:
-      path: ""
-      type: categories
-    values:
-      layout: category
 
 # Exclude these files from production site
 exclude:
-  - CHANGELOG.md
+  - Appraisals
+  - beautiful-jekyll-theme.gemspec
   - CNAME
   - Gemfile
   - Gemfile.lock
   - LICENSE
   - README.md
-  - screenshot.png
   - docs/
 
 plugins:
   - jekyll-paginate
   - jekyll-sitemap
-
-# Beautiful Jekyll / Dean Attali
-# 2fc73a3a967e97599c9763d05e564189
-
-# 커스텀 CSS 파일 추가
-extra_css:
-  - "/assets/css/custom.css"
-
-# 카테고리 설정 추가
-collections:
-  categories:
-    output: true
-

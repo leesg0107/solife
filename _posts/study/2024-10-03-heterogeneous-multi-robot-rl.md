@@ -1,25 +1,24 @@
 ---
 layout: post
-title: Heterogeneous Multi-Robot Reinforcement Learning 
-subtitle: Model Structure Study #1 - HetGPPO vs GPPO
+title: Heterogeneous Multi-Robot Reinforcement Learning
+subtitle: "Paper notes: HetGPPO vs. GPPO (Bettini et al., 2023)"
 thumbnail-img: /assets/img/GPPO_HetGPPPO.png
-tags: [MARL, GNN, heterogeneous-systems, multi-robot, reinforcement-learning]
-author: solgyu
+tags: [multi-agent-rl, multi-robot, gnn, paper-review]
 category: study
 mathjax: true
 ---
 
-## 🚀 Introduction
+## Introduction
 
-Traditional Multi-Agent Reinforcement Learning (MARL) frameworks have significant limitations in utilizing proper heterogeneous policies and creating truly decentralized agents due to their reliance on shared parameters. However, the authors propose **HetGPPO** (Heterogeneous Graph Neural Network Proximal Policy Optimization), which overcomes these limitations in partially observable environments while enabling fully decentralized learning.
+Most multi-agent reinforcement learning (MARL) methods share parameters across agents, which limits how heterogeneous the learned policies can be and makes training effectively centralized. Bettini et al. propose **HetGPPO** (Heterogeneous Graph Neural Network Proximal Policy Optimization), which overcomes these limitations in partially observable environments while enabling fully decentralized learning.
 
-HetGPPO demonstrates two key results through this research:
+The paper reports two main results:
 1. **Superior Performance in Strong Heterogeneity**: When homogeneous methods fail under strong heterogeneous requirements, HetGPPO succeeds.
-2. **Enhanced Performance in Weak Heterogeneity**: Even when homogeneous methods can learn heterogeneous behaviors, HetGPPO achieves higher performance.
+2. **Higher Resilience in Weak Heterogeneity**: When homogeneous methods can learn *apparently* heterogeneous behaviors, both models reach the same reward without noise, but HetGPPO achieves higher resilience to both training and deployment noise.
 
-## 🏗️ Classification of Heterogeneous Systems
+## Classification of Heterogeneous Systems
 
-Before diving deep, we need to clarify what constitutes a heterogeneous system. The paper presents two classification criteria: **P (Physical)** and **B (Behavioral)**:
+The paper first defines what a heterogeneous system is, using two criteria: **P (Physical)** and **B (Behavioral)**:
 
 ### Physical Heterogeneity (P)
 Refers to systems where agents/robots are fundamentally different types. Examples include:
@@ -45,7 +44,7 @@ Using these criteria, we can classify heterogeneous systems into five types:
 
 1. **P\B**: Physical differences only
    - Different hardware but same behavioral policies
-   - *Personal opinion: This seems suboptimal as physical differences should warrant different behaviors*
+   - *My note: this case seems unlikely to be optimal, since physical differences should usually call for different behaviors.*
 
 2. **P ∩ B_d**: Complete heterogeneity 
    - Different robots with different objectives
@@ -65,7 +64,7 @@ Using these criteria, we can classify heterogeneous systems into five types:
 
 **Important Note**: "Same objective" doesn't mean "same behavior" - it assumes different behaviors toward a common goal.
 
-## 📊 POMDP + Communication Graph Framework
+## POMDP and Communication Graph
 
 ### POMDP Formulation
 
@@ -94,7 +93,7 @@ This represents the maximum communication range and changes dynamically over tim
 ![GPPO vs HetGPPO](/assets/img/GPPO_HetGPPPO.png)
 *Architecture comparison: GPPO (left) with shared parameters vs HetGPPO (right) with individual parameters*
 
-## 🔗 GPPO (Graph Neural Network Proximal Policy Optimization)
+## GPPO (Graph Neural Network Proximal Policy Optimization)
 
 ### Evolution from IPPO
 
@@ -135,7 +134,7 @@ Where:
 - **Centralized training**: Due to parameter sharing
 - **Homogeneous behavior**: All agents become similar due to shared $\theta_i$
 
-## 🎯 HetGPPO (Heterogeneous Graph Neural Network Proximal Policy Optimization)
+## HetGPPO (Heterogeneous Graph Neural Network Proximal Policy Optimization)
 
 ### Key Innovation: Removing Parameter Sharing
 
@@ -159,19 +158,19 @@ HetGPPO **eliminates parameter sharing**, which has profound implications:
 
 ### Decentralized Training and Execution
 
-HetGPPO achieves the holy grail of MARL:
-- ✅ **Decentralized Training**: No central coordination needed
-- ✅ **Decentralized Execution**: Fully autonomous operation
+HetGPPO is decentralized in both phases:
+- **Decentralized training**: no central coordinator is required
+- **Decentralized execution**: each agent acts on local and neighborhood information
 
-## 🔬 Experimental Insights
+## Experimental Results
 
-The paper demonstrates through comprehensive experiments that:
+The experiments show that:
 
 1. **Strong Heterogeneity Scenarios**: HetGPPO succeeds where homogeneous methods fail
-2. **Weak Heterogeneity Scenarios**: HetGPPO outperforms even when homogeneous methods work
-3. **Scalability**: Performance maintained across different team sizes and complexity levels
+2. **Weak Heterogeneity Scenarios**: both models solve the task without noise, but HetGPPO degrades far more gracefully as observation noise increases
+3. **Real-World Transfer**: the give-way policy is deployed on physical robots, not only evaluated in simulation
 
-## 🎓 Key Takeaways
+## Key Takeaways
 
 ### Theoretical Contributions
 - **Novel heterogeneity classification** (P, B_s, B_d framework)
@@ -188,12 +187,8 @@ The paper demonstrates through comprehensive experiments that:
 - Larger-scale deployments
 - Integration with other MARL paradigms
 
-## 📚 References
+## References
 
 [1] Bettini, M., Shankar, A., & Prorok, A. (2023). Heterogeneous Multi-Robot Reinforcement Learning. 
 
 Paper Link: [https://arxiv.org/abs/2301.07137](https://arxiv.org/abs/2301.07137)
-
----
-
-*This study provides crucial insights into the future of heterogeneous multi-agent systems, where true decentralization meets intelligent specialization.*

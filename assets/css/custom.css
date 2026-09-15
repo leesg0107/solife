@@ -94,10 +94,11 @@ body {
   margin-bottom: 40px;
 }
 
-.sidebar-section h3 {
+.sidebar-section .sidebar-heading {
+  margin-top: 0;
   font-size: 0.9rem;
   font-weight: 700;
-  color: #999;
+  color: #6b6b6b;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 20px;
@@ -125,7 +126,7 @@ body {
 
 .post-link .post-date {
   font-size: 0.75rem;
-  color: #999;
+  color: #6b6b6b;
 }
 
 .post-link .post-title {
@@ -415,12 +416,12 @@ footer {
   margin-top: 40px;
   padding-top: 20px;
   border-top: 1px solid #e0e0e0;
-  color: #999;
+  color: #6b6b6b;
   font-size: 0.9rem;
 }
 
 footer p {
-  color: #999;
+  color: #6b6b6b;
   font-size: 0.9rem;
   margin-bottom: 10px;
 }
@@ -434,15 +435,9 @@ footer a:hover {
   color: #000;
 }
 
-/* Biography */
-.biography {
-  line-height: 2;
-  font-size: 1.05rem;
-}
-
 /* Post Metadata */
 .post-meta {
-  color: #999;
+  color: #6b6b6b;
   font-size: 0.9rem;
   margin-bottom: 8px;
 }
@@ -680,36 +675,6 @@ a:focus, button:focus {
   color: #fff;
 }
 
-/* Projects Page */
-.project-card {
-  background: #fafafa;
-  padding: 12px 16px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  border: 1px solid #e0e0e0;
-  transition: all 0.2s;
-}
-
-.project-card:hover {
-  transform: translateY(-2px);
-  background: #f5f5f5;
-}
-
-.project-card h3 {
-  margin-top: 0;
-  margin-bottom: 3px;
-  font-size: 1.3rem;
-}
-
-/* Category Pages */
-.category-page h1 {
-  margin-bottom: 40px;
-}
-
-.posts-by-category {
-  margin-top: 30px;
-}
-
 /* Utility Classes */
 .text-center {
   text-align: center;
@@ -780,20 +745,6 @@ a:focus, button:focus {
 
 .home-section > h2 {
   margin-bottom: 16px;
-}
-
-/* Mission pull-quote */
-.mission-quote {
-  border-left: 4px solid #000;
-  background: #fafafa;
-  padding: 18px 24px;
-  margin: 24px 0 0;
-  font-size: 1.12rem;
-  line-height: 1.55;
-  font-style: normal;
-  font-weight: 600;
-  color: #000;
-  border-radius: 0 8px 8px 0;
 }
 
 /* Project showcase grid */
@@ -871,83 +822,8 @@ a:focus, button:focus {
   line-height: 1.55;
 }
 
-.proj-card.is-wip {
-  border-style: dashed;
-  cursor: default;
-}
-
-.proj-thumb-ph {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%);
-}
-
-.proj-thumb-ph i {
-  font-size: 2.6rem;
-  color: rgba(255, 255, 255, 0.88);
-}
-
-/* Skills as grouped pills */
-.skills-groups {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-top: 18px;
-}
-
-.skills-group h4 {
-  margin: 0 0 12px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: #999;
-}
-
-.skills-group ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.skills-group li {
-  background: #f0f0f0;
-  color: #333;
-  padding: 5px 13px;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  margin: 0;
-}
-
-/* Footer links row */
-.home-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 22px;
-  margin-top: 18px;
-  font-weight: 500;
-}
-
-.home-links a {
-  text-decoration: none;
-  color: #000;
-}
-
-.home-links a:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
 @media (max-width: 768px) {
   .project-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .skills-groups {
     grid-template-columns: 1fr;
   }
 
